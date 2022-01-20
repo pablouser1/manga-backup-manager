@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+import "BackupManga.proto";
+import "BackupCategory.proto";
+import "BackupSource.proto";
+
+message Backup {
+  repeated BackupManga backupManga = 1;
+  repeated BackupCategory backupCategories = 2;
+  // Bump by 100 to specify this is a 0.x value
+  repeated BackupSource backupSources = 101;
+}

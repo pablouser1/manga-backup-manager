@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+message BackupChapter {
+    string url = 1;
+    string name = 2;
+    string scanlator = 3;
+    bool read = 4;
+    bool bookmark = 5;
+    int32 lastPageRead = 6;
+    int64 dateFetch = 7;
+    int64 dateUpload = 8;
+    float chapterNumber = 9;
+    int32 sourceOrder = 10;
+}
