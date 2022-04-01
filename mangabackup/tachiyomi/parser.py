@@ -1,15 +1,14 @@
 from mangabackup.tachiyomi.models.Backup_pb2 import Backup
 from google.protobuf.json_format import MessageToJson
 import json
-from types import SimpleNamespace
 
 class TachiyomiParser:
-    backup: Backup
+    data: dict
     def __init__(self, path: str):
-        self.backup = Backup()
+        backup = Backup()
         with open(path, 'rb') as f:
-            self.backup.ParseFromString(f.read())
+            backup.ParseFromString(f.read())
+            self.data = json.loads(MessageToJson(backup))
     
-    def toJSON(self)-> dict:
-        json_str = MessageToJson(self.backup)
-        return json.loads(json_str)
+    def getData(self)-> dict:
+        return self.data

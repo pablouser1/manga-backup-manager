@@ -10,6 +10,7 @@ class KomikkuWriter:
     data: dict
 
     def __init__(self, path: str, data: dict):
+        Path(path).mkdir(parents=True, exist_ok=True)
         self.db = sqlite3.connect(f'{path}/komikku.db')
         self.cur = self.db.cursor()
         with open('./create_komikku.sql') as f:
@@ -30,9 +31,12 @@ class KomikkuWriter:
         sources = self.data['backupSources']
 
         categories_komikku = list(map(lambda category: (category['name'],), categories))
-        for manga_index, manga in enumerate(mangas):
+
+        i = 0
+        for manga in mangas:
             allowed_servers = list(filter(lambda source: source['sourceId'] == manga['source'] and source['name'].lower() in servers, sources))
             if allowed_servers:
+                i+= 1
                 # Source is allowed, continue
                 server_id = allowed_servers[0]['name'].lower()
                 url = None
@@ -46,7 +50,7 @@ class KomikkuWriter:
                 ))
                 # Categories
                 for category in manga['categories']:
-                    categories_mangas_association.append((category + 1, manga_index + 1))
+                    categories_mangas_association.append((category + 1, i))
     
         # --- INSERT TO DB ---
         # Mangas

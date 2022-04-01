@@ -1,6 +1,4 @@
 /.vscode
 /.venv
 __pycache__
-/data
 /out/*
-!/out/.gitkeep
